@@ -28,13 +28,7 @@ namespace BukSub.Controllers
         public async Task<IActionResult> PostAsync([NotNull] string bookId)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            var book = await _bookRepository.GetUserBookAsync(userId, bookId);
-            if (book == null)
-            {
-                return NotFound();
-            }
-            
+                        
             var subscription = new BookSubscriptionServiceModel() { BookId = bookId, UserId = userId };
             await _bookSubscriptionsRepository.SaveAsync(subscription);
 
