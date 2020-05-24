@@ -14,14 +14,13 @@ namespace BukSub.Controllers
     {
         private readonly ILogger<SubscriptionsController> _logger;
         private readonly IBookSubscriptionsRepository _bookSubscriptionsRepository;
-        private readonly IBookRepository _bookRepository;
+        
 
-
-        public SubscriptionsController(ILogger<SubscriptionsController> logger, IBookSubscriptionsRepository bookSubscriptionsRepository, IBookRepository bookRepository)
+        public SubscriptionsController(ILogger<SubscriptionsController> logger, IBookSubscriptionsRepository bookSubscriptionsRepository)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _bookSubscriptionsRepository = bookSubscriptionsRepository ?? throw new ArgumentNullException(nameof(bookSubscriptionsRepository));
-            _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
+            
         }
 
         [HttpPost("{*bookId}")]
