@@ -16,12 +16,14 @@ export class BookSubscriptionsComponent {
     this.bookSubscriptionItems = this.buksubService.getBooks();
   }
 
-  public subscribeToBook(bookId: string) {
-    this.buksubService.subscribeToBook(bookId);
+  public async subscribeToBook(bookId: string) {
+    await this.buksubService.subscribeToBook(bookId);
+    this.bookSubscriptionItems = this.buksubService.getBooks();
   }
 
-  public unsubscribeFromBook(bookId: string) {
-    this.buksubService.unsubscribeFromBook(bookId);
+  public async unsubscribeFromBook(bookId: string) {
+    await this.buksubService.unsubscribeFromBook(bookId);
+    this.bookSubscriptionItems = this.buksubService.getBooks();
   }
 }
 
