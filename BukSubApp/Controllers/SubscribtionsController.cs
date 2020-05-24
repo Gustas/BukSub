@@ -24,7 +24,7 @@ namespace BukSub.Controllers
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
         }
 
-        [HttpPost("{bookId}")]
+        [HttpPost("{*bookId}")]
         public async Task<IActionResult> PostAsync([NotNull] string bookId)
         {
             var book = await _bookRepository.GetBookAsync(bookId);
@@ -40,7 +40,7 @@ namespace BukSub.Controllers
             return Ok();
         }
 
-        [HttpDelete("{bookId}")]
+        [HttpDelete("{*bookId}")]
 
         public async Task<IActionResult> DeleteAsync([NotNull] string bookId)
         {

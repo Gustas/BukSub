@@ -35,7 +35,7 @@ namespace BukSub.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BookDto>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("{bookId}")]
+        [HttpGet("{*bookId}")]
         public async Task<IActionResult> GetAsync([NotNull]string bookId)
         {
             var book = await _bookRepository.GetBookAsync(bookId);
@@ -48,14 +48,14 @@ namespace BukSub.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [HttpPut("{bookId}")]
+        [HttpPut("{*bookId}")]
         public async Task<IActionResult> PutAsync([NotNull]string bookId, [FromBody] PutBookDto book)
         {
             await _bookRepository.SaveBookAsync(new BookServiceModel() { BookId = bookId, Name = book.Name, Price = book.Price, Text = book.Text });
             return Ok();
         }
 
-        [HttpDelete("{bookId}")]
+        [HttpDelete("{*bookId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAsync([NotNull]string bookId)
