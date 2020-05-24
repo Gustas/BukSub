@@ -17,7 +17,11 @@ export class BookSubscriptionsComponent {
   }
 
   public subscribeToBook(bookId: string) {
-    console.log("subscribe to book: " + bookId);
+    this.buksubService.subscribeToBook(bookId);
+  }
+
+  public unsubscribeFromBook(bookId: string) {
+    this.buksubService.unsubscribeFromBook(bookId);
   }
 }
 

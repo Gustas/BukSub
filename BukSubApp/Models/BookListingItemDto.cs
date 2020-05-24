@@ -20,6 +20,12 @@ namespace BukSub.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// Price to subscribe to this book
+        /// </summary>
+        [Required]
+        public double Price { get; set; }
+
+        /// <summary>
         /// Set to true if user is susbcribed to book
         /// </summary>
         [Required]

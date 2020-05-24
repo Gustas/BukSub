@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +11,20 @@ export class BuksubService {
     private http: HttpClient
   ) { }
 
-  getBooks() {
+  getBooks(): Observable<BookSubscriptionItem[]> {
     return this.http.get<BookSubscriptionItem[]>('/api/Books');
   }
 
-  subscribeToBook(bookId: string) {
-    
+  async subscribeToBook(bookId: string) {
+    return await this.http.post('/api/Subscriptions/' + bookId, null).toPromise();
   }
 
-  subscribeFromBook(bookId: string) {
-
+  async unsubscribeFromBook(bookId: string) {
+    console.log("unsubscribing");
+    return await this.http.delete('/api/Subscriptions/' + bookId).toPromise();
   }
 
-  getBook(bookId: string) {
+  getBook(bookId: string): Observable<BookItem> {
     return this.http.get<BookItem>('/api/Books/' + bookId);    
   }
 }

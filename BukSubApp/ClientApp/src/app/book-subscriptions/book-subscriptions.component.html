@@ -5,13 +5,16 @@
     <li class="list-group-item" *ngFor="let bookSubscriptionItem of bookSubscriptionItems | async">
       <div class="row">
         <div class="col-10">
-          <a [routerLink]="['/book', bookSubscriptionItem.bookId]" [title]="'Read ' + bookSubscriptionItem.name">
+          <a *ngIf="!bookSubscriptionItem.subscribedToBook" [title]="'Subscribe to read ' + bookSubscriptionItem.name">
+            <h4> {{ bookSubscriptionItem.name }} </h4>
+          </a>
+          <a *ngIf="bookSubscriptionItem.subscribedToBook" [routerLink]="['/book', bookSubscriptionItem.bookId]" [title]="'Read ' + bookSubscriptionItem.name">
             <h4> {{ bookSubscriptionItem.name }} </h4>
           </a>
         </div>
         <div class="col-2">
-          <button class="btn btn-success btn-block" *ngIf="!bookSubscriptionItem.subscribedToBook" (click)="subscribeToBook(bookSubscriptionItem.bookId)">Subscribe</button>
-          <button class="btn btn-secondary" *ngIf="bookSubscriptionItem.subscribedToBook">Unsubscribe</button>
+          <button class="btn btn-success btn-block" *ngIf="!bookSubscriptionItem.subscribedToBook" (click)="subscribeToBook(bookSubscriptionItem.bookId)">Subscribe {{ bookSubscriptionItem.price | currency }}</button>
+          <button class="btn btn-secondary" *ngIf="bookSubscriptionItem.subscribedToBook" (click)="unsubscribeFromBook(bookSubscriptionItem.bookId)">Unsubscribe</button>
         </div>
       </div>
     </li>

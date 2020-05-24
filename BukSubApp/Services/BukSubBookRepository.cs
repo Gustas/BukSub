@@ -62,7 +62,7 @@ namespace BukSub.Services
             if (userId is null) throw new ArgumentNullException(nameof(userId));
 
             var result = await _dbContext.Books
-                .Select(s => new BookListingItemDto { BookId = s.BookId, Name = s.Name, SubscribedToBook = s.BookSubscriptions.Any(bs => bs.UserId == userId) })
+                .Select(s => new BookListingItemDto { BookId = s.BookId, Name = s.Name, Price = s.Price, SubscribedToBook = s.BookSubscriptions.Any(bs => bs.UserId == userId) })
                 .ToListAsync();
 
             return result;
