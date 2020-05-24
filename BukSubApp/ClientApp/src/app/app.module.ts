@@ -10,13 +10,15 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { BookSubscriptionsComponent } from './book-subscriptions/book-subscribtions.component';
+import { BookComponent } from './book/book.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    BookSubscriptionsComponent
+    BookSubscriptionsComponent,
+    BookComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -26,7 +28,7 @@ import { BookSubscriptionsComponent } from './book-subscriptions/book-subscribti
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'book-subscriptions', component: BookSubscriptionsComponent, canActivate: [AuthorizeGuard] },
-      
+      { path: 'book/:bookId', component: BookComponent, canActivate: [AuthorizeGuard] },      
     ])
   ],
   providers: [

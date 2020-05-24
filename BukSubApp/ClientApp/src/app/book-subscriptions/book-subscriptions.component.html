@@ -1,14 +1,13 @@
 <h1>Book Subscriptions</h1>
 
-<p *ngIf="!bookSubscriptionItems"><em>Loading Books...</em></p>
-
-
 <div class="container" *ngIf="bookSubscriptionItems">
   <ul class='list-group list-group-flush'>
-    <li class="list-group-item" *ngFor="let bookSubscriptionItem of bookSubscriptionItems">
+    <li class="list-group-item" *ngFor="let bookSubscriptionItem of bookSubscriptionItems | async">
       <div class="row">
         <div class="col-10">
-          <h4> {{ bookSubscriptionItem.name }} </h4>
+          <a [routerLink]="['/book', bookSubscriptionItem.bookId]" [title]="'Read ' + bookSubscriptionItem.name">
+            <h4> {{ bookSubscriptionItem.name }} </h4>
+          </a>
         </div>
         <div class="col-2">
           <button class="btn btn-success btn-block" *ngIf="!bookSubscriptionItem.subscribedToBook" (click)="subscribeToBook(bookSubscriptionItem.bookId)">Subscribe</button>

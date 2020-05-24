@@ -1,0 +1,9 @@
+<div *ngIf="!book">
+  <p>Loading book...</p>
+</div>
+
+<div *ngIf="book">
+  <h1>{{ book.name }}</h1>
+  <p style="white-space: pre-line;"> {{ book.text }} </p>
+</div>
+
