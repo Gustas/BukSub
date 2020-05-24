@@ -27,13 +27,14 @@ namespace BukSub.Controllers
         [HttpPost("{*bookId}")]
         public async Task<IActionResult> PostAsync([NotNull] string bookId)
         {
-            var book = await _bookRepository.GetBookAsync(bookId);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var book = await _bookRepository.GetUserBookAsync(userId, bookId);
             if (book == null)
             {
                 return NotFound();
             }
-
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            
             var subscription = new BookSubscriptionServiceModel() { BookId = bookId, UserId = userId };
             await _bookSubscriptionsRepository.SaveAsync(subscription);
 

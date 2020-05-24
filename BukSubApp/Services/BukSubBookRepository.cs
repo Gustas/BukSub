@@ -14,14 +14,15 @@ namespace BukSub.Services
 
         public BukSubBookRepository(ApplicationDbContext dbContext)
         {
-            _dbContext = dbContext ?? throw new System.ArgumentNullException(nameof(dbContext));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public async Task<BookServiceModel> GetBookAsync(string id)
+        public async Task<BookServiceModel> GetUserBookAsync(string userId, string bookId)
         {
-            if (id is null) throw new ArgumentNullException(nameof(id));
+            if (userId is null) throw new ArgumentNullException(nameof(userId));
+            if (bookId is null) throw new ArgumentNullException(nameof(bookId));
 
-            var book = await _dbContext.Books.FindAsync(id);
+            var book = await _dbContext.Books.FirstOrDefaultAsync(b => b.BookId == bookId && b.BookSubscriptions.Any(bs => bs.UserId == userId));
 
             return book != null ? new BookServiceModel { BookId = book.BookId, Name = book.Name, Price = book.Price, Text = book.Text } : null;
         }
@@ -53,7 +54,7 @@ namespace BukSub.Services
 
             _dbContext.Books.Remove(book);
             await _dbContext.SaveChangesAsync();
-            
+
             return true;
         }
 

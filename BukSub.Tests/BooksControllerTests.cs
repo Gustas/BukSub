@@ -1,17 +1,13 @@
 using BukSub.Controllers;
 using BukSub.Models;
 using BukSub.Services;
-using IdentityModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -81,10 +77,17 @@ namespace BukSub.Tests
             // Arrange
             var logger = new Mock<ILogger<BooksController>>();
             var bookRepository = new Mock<IBookRepository>();
-            bookRepository.Setup(s => s.GetBookAsync(It.IsAny<string>())).Returns(
+            bookRepository.Setup(s => s.GetUserBookAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(
                 Task.FromResult(new BookServiceModel { BookId = "IDDQ1", Name = "The Bible", Price = 666, Text = "Jibba jabba  complete text" })
             );
+
+            var context = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = new ClaimsPrincipal(new[] { new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "test_name_identifier") }) }) }
+            };
+
             var booksController = new BooksController(logger.Object, bookRepository.Object);
+            booksController.ControllerContext = context;
 
             // Act
             var getResponse = await booksController.GetAsync("IDDQ1");
@@ -106,9 +109,15 @@ namespace BukSub.Tests
             var logger = new Mock<ILogger<BooksController>>();
 
             var bookRepository = new Mock<IBookRepository>();
-            bookRepository.Setup(s => s.GetBookAsync("IDDQ1")).Returns(Task.FromResult((BookServiceModel)null));
+            bookRepository.Setup(s => s.GetUserBookAsync("SOMEUSER", "IDDQ1")).Returns(Task.FromResult((BookServiceModel)null));
+
+            var context = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext { User = new ClaimsPrincipal(new[] { new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "test_name_identifier") }) }) }
+            };
 
             var booksController = new BooksController(logger.Object, bookRepository.Object);
+            booksController.ControllerContext = context;
 
             // Act
             var getResponse = await booksController.GetAsync("IDDQ1");

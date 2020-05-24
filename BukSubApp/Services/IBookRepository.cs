@@ -6,7 +6,7 @@ namespace BukSub.Services
 {
     public interface IBookRepository
     {
-        Task<BookServiceModel> GetBookAsync(string bookId);
+        Task<BookServiceModel> GetUserBookAsync(string userId, string bookId);
 
         Task SaveBookAsync(BookServiceModel book);
 

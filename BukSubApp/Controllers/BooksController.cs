@@ -38,7 +38,8 @@ namespace BukSub.Controllers
         [HttpGet("{*bookId}")]
         public async Task<IActionResult> GetAsync([NotNull]string bookId)
         {
-            var book = await _bookRepository.GetBookAsync(bookId);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var book = await _bookRepository.GetUserBookAsync(userId, bookId);
             if (book == null)
             {
                 return NotFound();

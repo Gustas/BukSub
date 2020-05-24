@@ -22,7 +22,7 @@ namespace BukSub.Tests
             var bookSubscriptionRepository = new Mock<IBookSubscriptionsRepository>();
 
             var bookRepository = new Mock<IBookRepository>();
-            bookRepository.Setup(s => s.GetBookAsync(It.IsAny<string>())).Returns(Task.FromResult(new BookServiceModel() { BookId = "IDDQD", Name = "The Bible", Price = 666.0, Text = "Text text" }));
+            bookRepository.Setup(s => s.GetUserBookAsync(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(new BookServiceModel() { BookId = "IDDQD", Name = "The Bible", Price = 666.0, Text = "Text text" }));
 
             var context = new ControllerContext
             {
